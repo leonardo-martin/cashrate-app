@@ -1,4 +1,5 @@
 import { User } from 'src/users/user.entity';
+import { Work } from 'src/works/work.entity';
 
 export default () => ({
   database: {
@@ -9,7 +10,8 @@ export default () => ({
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DATABASE,
     synchronize: true,
-    entities: [User],
+    ssl: process.env.POSTGRES_SSL === 'true',
+    entities: [User, Work],
     // entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   },
 });

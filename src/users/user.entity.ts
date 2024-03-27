@@ -1,4 +1,3 @@
-import { createHmac } from 'crypto';
 import { encryptedSHA256Hash } from 'src/utils/encryptions';
 import {
   AfterInsert,

@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { createHmac } from 'crypto';
 
 @Injectable()
 export class UsersService {
@@ -14,7 +13,11 @@ export class UsersService {
     return this.repo.save(user);
   }
 
-  findOne(email: string): Promise<User> {
+  findById(id: number): Promise<User> {
+    return this.repo.findOneBy({ id });
+  }
+
+  findByEmail(email: string): Promise<User> {
     return this.repo.findOneBy({ email });
   }
 
@@ -22,8 +25,8 @@ export class UsersService {
     return this.repo.find();
   }
 
-  async update(email: string, attrs: Partial<User>) {
-    const user = await this.findOne(email);
+  async update(id: number, attrs: Partial<User>) {
+    const user = await this.findById(id);
     if (!user) {
       throw new Error('user not found');
     }
@@ -31,8 +34,8 @@ export class UsersService {
     return this.repo.save(user);
   }
 
-  async remove(email: string) {
-    const user = await this.findOne(email);
+  async remove(id: number) {
+    const user = await this.findById(id);
     if (!user) {
       throw new Error('user not found');
     }
